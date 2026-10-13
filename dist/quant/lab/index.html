@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atlas Quant — Shishir Lohar</title>
+    <meta
+      name="description"
+      content="Atlas Quant: historical strategy backtests, benchmark comparisons, risk metrics, and reproducible research experiments."
+    />
+    <meta name="theme-color" content="#101011" />
+    <link rel="canonical" href="https://shishirlohar.com/quant/lab/" />
+    <meta property="og:title" content="Atlas Quant — Research Lab" />
+    <meta property="og:description" content="Test trading ideas against historical evidence." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shishirlohar.com/quant/lab/" />
+    <link rel="icon" href="/assets/atlas-shell/favicon.svg?v=727f2134fbea" />
+    <link rel="stylesheet" href="/assets/atlas-shell/style.css?v=2e4097192789" />
+    <script src="/assets/atlas-shell/theme.js?v=e03df0f86d0c"></script>
+    <link rel="stylesheet" href="/assets/quant/quant.css?v=90211dc4087b" />
+  </head>
+  <body data-page="quant">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="ambient" aria-hidden="true"></div>
+    <div class="shell">
+      <header>
+        <a class="name" href="https://shishirlohar.com/">shishir lohar</a>
+        <nav aria-label="Main navigation">
+          <a href="https://shishirlohar.com/" data-page="about">about</a
+          ><a href="https://shishirlohar.com/projects/" data-page="projects">projects</a
+          ><a href="https://shishirlohar.com/experience/" data-page="experience">experience</a
+          ><a href="/quant/" data-page="quant">quant lab</a>
+        </nav>
+        <div class="tools">
+          <button id="motion" aria-label="Pause animations" title="Pause animations">Ⅱ</button
+          ><button id="theme" aria-label="Switch color theme" title="Switch color theme">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+              />
+            </svg></button
+          ><button id="commands" aria-label="Open command menu" title="Command menu (⌘K or Ctrl K)">
+            <kbd>⌘</kbd><kbd>K</kbd>
+          </button>
+        </div>
+      </header>
+      <main id="main">
+        <div class="lab-heading">
+          <div>
+            <p class="eyebrow"><a href="/quant/">ATLAS QUANT</a> / RESEARCH LAB</p>
+            <h1>Test an idea.</h1>
+            <p>One asset. Clear rules. An honest comparison.</p>
+          </div>
+          <span class="version">LAB / 01</span>
+        </div>
+        <div class="lab-grid">
+          <aside class="panel">
+            <form id="backtest-form">
+              <p class="eyebrow">EXPERIMENT SETUP</p>
+              <label
+                >Dataset<select id="dataset">
+                  <option value="spy">SPY · S&amp;P 500 ETF</option>
+                  <option value="csv">Import daily CSV…</option>
+                </select></label
+              >
+              <div id="import-fields" hidden>
+                <label>Asset label<input id="ticker" maxlength="20" value="CUSTOM" /></label
+                ><label>CSV file<input id="csv" type="file" accept=".csv,text/csv" /></label>
+                <p class="fine">
+                  Required: date,close. Ascending ISO dates and positive daily adjusted prices. The
+                  benchmark uses your imported asset.
+                </p>
+              </div>
+              <p class="fine" id="data-note">Loading historical data…</p>
+              <p class="freshness" id="freshness" role="status"></p>
+              <button type="button" id="check-data">Check for data update</button
+              ><label
+                >Strategy<select id="strategy">
+                  <option value="momentum">Time-series momentum</option>
+                  <option value="hold">Buy and hold</option>
+                </select></label
+              >
+              <p class="fine" id="rule">
+                Own the asset when its prior closing price is above its close N sessions earlier.
+                Otherwise, hold cash.
+              </p>
+              <label
+                >Lookback · trading days<input
+                  id="lookback"
+                  type="number"
+                  min="1"
+                  max="252"
+                  value="30"
+                  required
+              /></label>
+              <div class="field-pair">
+                <label>Start date<input id="start" type="date" required /></label
+                ><label>End date<input id="end" type="date" required /></label>
+              </div>
+              <label
+                >Starting capital · USD<input
+                  id="capital"
+                  type="number"
+                  min="1"
+                  max="1000000000"
+                  step="1"
+                  value="100000"
+                  required /></label
+              ><label
+                >Cost per trade · basis points<input
+                  id="fee"
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="0.1"
+                  value="5"
+                  required
+              /></label>
+              <p class="fine">5 bps = 0.05% of traded value, on each buy or sell.</p>
+              <button class="launch" id="run" disabled>Run backtest <span>↗</span></button>
+            </form>
+            <p id="status" role="status" aria-live="polite"></p>
+          </aside>
+          <div class="results">
+            <section id="empty" class="panel">
+              <h2>Your experiment starts here.</h2>
+              <p>Choose your settings and run a historical test.</p>
+            </section>
+            <div id="results" hidden>
+              <div class="result-heading">
+                <h2 id="result-title">Results</h2>
+                <span id="range" class="fine"></span>
+              </div>
+              <div id="metrics" class="metrics"></div>
+              <section class="panel chart-panel">
+                <div class="result-heading">
+                  <h2>Portfolio value</h2>
+                  <div class="legend"><span>● Strategy</span><span>┄ Buy &amp; hold</span></div>
+                </div>
+                <svg
+                  id="chart"
+                  viewBox="0 0 800 310"
+                  role="img"
+                  aria-labelledby="chart-title chart-desc"
+                >
+                  <title id="chart-title">Strategy and benchmark equity curves</title>
+                  <desc id="chart-desc">
+                    Portfolio value over the selected period; download CSV for all daily values.
+                  </desc>
+                </svg>
+                <p id="interpretation" class="fine"></p>
+              </section>
+              <div class="actions">
+                <button id="save">Save experiment</button
+                ><button id="export">Export experiment JSON</button
+                ><button id="export-csv">Export equity CSV</button>
+              </div>
+              <section class="panel">
+                <div class="result-heading">
+                  <h2>Trade history</h2>
+                  <span id="trade-count" class="fine"></span>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Side</th>
+                        <th>Price</th>
+                        <th>Units*</th>
+                        <th>Cost</th>
+                      </tr>
+                    </thead>
+                    <tbody id="trades"></tbody>
+                  </table>
+                </div>
+                <p class="fine">
+                  *Units in the adjusted-price series. Final holdings remain open and are marked to
+                  market.
+                </p>
+              </section>
+            </div>
+          </div>
+        </div>
+        <section class="panel" id="archive">
+          <div class="result-heading">
+            <h2>Experiment archive</h2>
+            <span class="fine">This browser · latest 10 runs</span>
+          </div>
+          <div id="saved"></div>
+          <p class="fine">
+            Saved locally on this device. Export JSON to keep a portable copy with the complete
+            dataset and results.
+          </p>
+        </section>
+        <section class="panel methodology">
+          <p class="eyebrow">READ THE ASSUMPTIONS</p>
+          <h2>What this backtest actually measures.</h2>
+          <details open>
+            <summary>Execution &amp; data</summary>
+            <p>
+              A signal uses the previous session’s close and executes at the current close. It first
+              earns the next session’s return. Warmup data comes before your chosen start date. Both
+              strategies pay the same proportional costs; fractional units are allowed. Cash earns
+              zero. No leverage, taxes, separate slippage, or forced final sale.
+            </p>
+            <p>
+              SPY uses Yahoo Finance daily adjusted closes from 2020 onward. The data date and last
+              successful retrieval appear in the setup panel. The production workflow is scheduled
+              on weekdays at 23:30 UTC (7:30 p.m. Eastern during daylight saving time; 6:30 p.m. in
+              winter). Only completed sessions are included; this is not an intraday quote feed.
+              Adjusted prices incorporate distributions and splits; they are a research
+              approximation, not executable historical quotes.
+              <a href="https://finance.yahoo.com/quote/SPY/history/">Data source ↗</a>
+            </p>
+          </details>
+          <details>
+            <summary>Understanding the metrics</summary>
+            <p>
+              <strong>Total return:</strong> percentage change from starting capital after modeled
+              costs. <strong>Sharpe:</strong> mean daily return divided by sample daily standard
+              deviation, multiplied by √252, assuming a zero risk-free rate. Undefined for constant
+              returns. <strong>Maximum drawdown:</strong> largest decline from a previous portfolio
+              peak, including starting capital. <strong>Volatility:</strong> sample daily standard
+              deviation multiplied by √252.
+            </p>
+          </details>
+          <details>
+            <summary>What a good result does not prove</summary>
+            <p>
+              Choosing parameters after inspecting results can overfit this history. This lab does
+              not perform out-of-sample validation. A single ETF and one period do not establish
+              robustness. Imported data must have a consistent daily frequency and adjustment basis.
+              Historical results do not predict future returns.
+            </p>
+          </details>
+        </section>
+        <noscript
+          ><p>
+            This lab needs JavaScript to run calculations. Enable JavaScript and reload.
+          </p></noscript
+        >
+      </main>
+      <footer>
+        <div class="footer-top">
+          <div class="socials">
+            <a href="https://github.com/winterblacksmith/atlas-quant" aria-label="GitHub"
+              >github ↗</a
+            ><a href="https://www.linkedin.com/in/shishirlohar/" aria-label="LinkedIn"
+              >linkedin ↗</a
+            ><a href="mailto:shishirlohar@gmail.com">email ↗</a>
+          </div>
+          <a
+            href="https://shishirlohar.com/assets/shishir-lohar-resume.pdf?v=850dfe616178"
+            target="_blank"
+            rel="noopener"
+            >résumé ↗</a
+          >
+        </div>
+        <div class="footer-bottom">
+          <span>Atlanta, Georgia</span><span>2026 © Shishir Lohar</span>
+        </div>
+      </footer>
+    </div>
+    <dialog id="palette" aria-labelledby="palette-title">
+      <div class="palette-heading">
+        <h2 id="palette-title">Go somewhere.</h2>
+        <button id="close-palette" aria-label="Close command menu">esc</button>
+      </div>
+      <input
+        id="command-search"
+        aria-label="Search commands"
+        placeholder="Search pages and links…"
+        autocomplete="off"
+      />
+      <div id="command-list">
+        <a href="https://shishirlohar.com/">About <span>01</span></a
+        ><a href="https://shishirlohar.com/projects/">Projects <span>02</span></a
+        ><a href="https://shishirlohar.com/experience/">Experience <span>03</span></a
+        ><a href="/quant/">Atlas Quant <span>04</span></a
+        ><a
+          href="https://shishirlohar.com/assets/shishir-lohar-resume.pdf?v=850dfe616178"
+          target="_blank"
+          rel="noopener"
+          >Open résumé <span>↗</span></a
+        ><a href="mailto:shishirlohar@gmail.com">Send an email <span>↗</span></a
+        ><a href="https://github.com/winterblacksmith/atlas-quant">GitHub <span>↗</span></a
+        ><button id="command-theme">Switch color theme <span>◐</span></button>
+      </div>
+      <p id="command-empty" hidden>No matching commands.</p>
+      <div class="palette-help">↑ ↓ navigate <span>↵ open</span></div>
+    </dialog>
+    <script src="/assets/atlas-shell/app.js?v=d10815200a08" defer></script>
+    <script type="module" src="/assets/quant/lab.js?v=1fdd29c5ff3c"></script>
+  </body>
+</html>

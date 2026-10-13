@@ -30,3 +30,7 @@ a failure, or a decision that needs the owner; stay quiet for unchanged conditio
 Local scheduled work requires the computer awake, Codex running, and GitHub access.
 The initial migration and first feature branch exercise the same check/commit/push
 path; future unattended runs remain subject to the app's permissions and usage limits.
+
+HTML uses two-space indentation and a 100-column print width. Run
+`npm run format:html` after editing markup; it uses pinned Prettier 3.6.2 on demand.
+Keep the `quant lab` link in the main navigation on each page.

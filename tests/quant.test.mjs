@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {backtest,parseCSV,metrics} from '../dist/assets/quant/engine.js';
+const rows=prices=>prices.map((close,i)=>({date:`2024-01-${String(i+1).padStart(2,'0')}`,close}));
+const config={start:'2024-01-03',end:'2024-01-06',capital:100,lookback:1,feeBps:0,strategy:'momentum'};
+test('hold matches hand-calculated equity and benchmark',()=>{const r=backtest(rows([100,100,100,120,90,110]),{...config,strategy:'hold'});assert.equal(r.strategy.metrics.finalValue,110);assert.deepEqual(r.strategy,r.benchmark);assert.ok(Math.abs(r.strategy.metrics.maxDrawdown+.25)<1e-12);});
+test('momentum uses prior prices, and earns returns only after execution',()=>{const r=backtest(rows([100,110,50,80,90,100]),config);assert.deepEqual(r.strategy.trades.map(t=>[t.date,t.side]),[['2024-01-03','BUY'],['2024-01-04','SELL'],['2024-01-05','BUY']]);assert.equal(r.strategy.curve[0].equity,100);assert.equal(r.strategy.curve[1].equity,160);});
+test('future prices cannot alter previous positions or values',()=>{const a=backtest(rows([100,110,50,80,90,100]),config),b=backtest(rows([100,110,50,80,900,1]),config);assert.deepEqual(a.strategy.curve.slice(0,2),b.strategy.curve.slice(0,2));});
+test('fees on both sides and initial fee drawdown',()=>{const r=backtest(rows([100,110,100,100,100,100]),{...config,feeBps:100});assert.ok(Math.abs(r.strategy.metrics.finalValue-100*.99/1.01)<1e-10);assert.equal(r.strategy.trades.length,2);assert.ok(r.strategy.metrics.maxDrawdown<0);});
+test('flat cash has undefined Sharpe',()=>{const r=backtest(rows([100,100,100,100,100,100]),config);assert.equal(r.strategy.metrics.sharpe,null);assert.equal(r.strategy.metrics.totalReturn,0);assert.equal(r.strategy.trades.length,0);});
+test('CSV rejects duplicates, impossible dates, nonpositive prices and bad headers',()=>{for(const csv of ['date,close\n2024-02-30,2\n2024-03-01,3\n2024-03-02,4','date,close\n2024-01-01,1\n2024-01-01,2\n2024-01-02,3','date,close\n2024-01-01,0\n2024-01-02,2\n2024-01-03,3','x,y\n1,2'])assert.throws(()=>parseCSV(csv));});
+test('valid CSV and config validation',()=>{assert.equal(parseCSV('date,close\n2024-01-01,1\n2024-01-02,2\n2024-01-03,3').length,3);for(const patch of [{start:'2024-01-01'},{end:'2024-01-02'},{capital:NaN},{feeBps:-1},{lookback:2.5},{end:'2024-02-30'}])assert.throws(()=>backtest(rows([1,2,3,4,5,6]),{...config,...patch}));});
+test('sample volatility matches independently calculated daily returns',()=>{const m=metrics([{equity:110},{equity:99},{equity:108.9}],100);const mean=1/30;const variance=((.1-mean)**2+(-.1-mean)**2+(.1-mean)**2)/2;assert.ok(Math.abs(m.volatility-Math.sqrt(variance*252))<1e-10);});

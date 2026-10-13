@@ -58,3 +58,5 @@ html[data-motion=paused] .name span{animation:none!important}
 @keyframes orbit-dots{to{stroke-dashoffset:-10}}
 html[data-motion=paused] .project-orbit rect,html[data-motion=paused] .name span{animation-play-state:paused!important}
 @media(prefers-reduced-motion:reduce){.project-orbit rect,.name span{animation:none!important}}
+/* Four navigation links remain on one row on narrow phones. */
+@media(max-width:620px){header nav{gap:12px}header nav a{white-space:nowrap}}

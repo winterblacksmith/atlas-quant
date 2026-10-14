@@ -1,4 +1,4 @@
-# Atlas Quant backlog
+# Orion Quant Lab backlog
 
 ## Next
 - Import exported JSON experiments and compare saved runs side by side.
@@ -21,4 +21,4 @@
 
 - Daily API refresh, completed-session filtering, dataset hashes and freshness UI.
 
-- Standalone Atlas repository, preview, CI checks, and a pinned portfolio integration.
+- Standalone Orion Quant Lab repository, preview, CI checks, and a pinned portfolio integration.

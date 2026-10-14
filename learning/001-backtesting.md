@@ -1,7 +1,7 @@
 # Backtesting without looking ahead
 
 ## What changed?
-The first Atlas Quant lab tests buy-and-hold and time-series momentum against
+The first Orion Quant Lab tests buy-and-hold and time-series momentum against
 historical SPY adjusted prices, with the same costs and capital.
 
 ## What does this mean?

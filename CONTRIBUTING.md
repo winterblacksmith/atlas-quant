@@ -1,4 +1,4 @@
-# Developing Atlas
+# Developing Orion Quant Lab
 
 1. Fetch `origin` and start `codex/<short-description>` from `origin/main`.
 2. Check open pull requests to avoid duplicate work. Choose one bounded item from
@@ -12,10 +12,10 @@
 
 ## Publishing a reviewed release
 
-After merging an Atlas PR, update the full `revision` SHA in the portfolio's
+After merging an Orion PR, update the full `revision` SHA in the portfolio's
 `atlas-quant.lock.json` on a separate branch. In the portfolio run
 `npm run sync:atlas`, then `npm run check`. Open and review that portfolio PR.
-Merging it publishes the selected Atlas code through the existing deployment.
+Merging it publishes the selected Orion code through the existing deployment.
 The daily market-data workflow continues independently of daily development.
 
 ## Daily Codex task

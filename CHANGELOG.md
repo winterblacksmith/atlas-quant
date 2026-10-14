@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-14
+
+- Renamed the public project to Orion Quant Lab while preserving existing site URLs and repository links.
+
 ## 2026-10-13
 
 - Extracted Atlas Quant into its own repository with a standalone local preview.

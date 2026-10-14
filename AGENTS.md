@@ -1,4 +1,4 @@
-# Atlas working agreements
+# Orion Quant Lab working agreements
 
 - This is a standalone static research lab. Keep it dependency-light and free of
   new paid services. Preserve `/quant/` and `/quant/lab/` URLs.

@@ -17,7 +17,7 @@
     <link rel="icon" href="/assets/atlas-shell/favicon.svg?v=727f2134fbea" />
     <link rel="stylesheet" href="/assets/atlas-shell/style.css?v=c8e5262a760c" />
     <script src="/assets/atlas-shell/theme.js?v=e03df0f86d0c"></script>
-    <link rel="stylesheet" href="/assets/quant/quant.css?v=90211dc4087b" />
+    <link rel="stylesheet" href="/assets/quant/quant.css?v=2490f239bf4d" />
   </head>
   <body data-page="quant">
     <a class="skip" href="#main">Skip to content</a>
@@ -151,6 +151,26 @@
                 </svg>
                 <p id="interpretation" class="fine"></p>
               </section>
+              <section class="panel chart-panel">
+                <div class="result-heading">
+                  <h2>Drawdown from prior peak</h2>
+                  <div class="legend"><span>● Strategy</span><span>┄ Buy &amp; hold</span></div>
+                </div>
+                <svg
+                  id="drawdown-chart"
+                  viewBox="0 0 800 310"
+                  role="img"
+                  aria-labelledby="drawdown-title drawdown-desc"
+                >
+                  <title id="drawdown-title">Strategy and benchmark drawdowns</title>
+                  <desc id="drawdown-desc">
+                    Percentage decline from each portfolio's prior peak over the selected period.
+                  </desc>
+                </svg>
+                <p class="fine">
+                  Zero marks a new high. Lower values show the loss from the latest portfolio peak.
+                </p>
+              </section>
               <div class="actions">
                 <button id="save">Save experiment</button
                 ><button id="export">Export experiment JSON</button
@@ -219,11 +239,12 @@
             <summary>Understanding the metrics</summary>
             <p>
               <strong>Total return:</strong> percentage change from starting capital after modeled
-              costs. <strong>Sharpe:</strong> mean daily return divided by sample daily standard
-              deviation, multiplied by √252, assuming a zero risk-free rate. Undefined for constant
-              returns. <strong>Maximum drawdown:</strong> largest decline from a previous portfolio
-              peak, including starting capital. <strong>Volatility:</strong> sample daily standard
-              deviation multiplied by √252.
+              costs. <strong>Annualized return:</strong> geometric return scaled to 252 trading
+              observations. <strong>Sharpe:</strong> mean daily return divided by sample daily
+              standard deviation, multiplied by √252, assuming a zero risk-free rate. Undefined for
+              constant returns. <strong>Maximum drawdown:</strong> largest decline from a previous
+              portfolio peak, including starting capital. <strong>Volatility:</strong> sample daily
+              standard deviation multiplied by √252.
             </p>
           </details>
           <details>
@@ -292,6 +313,6 @@
       <div class="palette-help">↑ ↓ navigate <span>↵ open</span></div>
     </dialog>
     <script src="/assets/atlas-shell/app.js?v=d10815200a08" defer></script>
-    <script type="module" src="/assets/quant/lab.js?v=1fdd29c5ff3c"></script>
+    <script type="module" src="/assets/quant/lab.js?v=5debfd7dd4f0"></script>
   </body>
 </html>

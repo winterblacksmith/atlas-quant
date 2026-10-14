@@ -26,7 +26,8 @@ no leverage, taxes, separate spread or slippage. Open positions are marked to
 market at the last close, without forced liquidation. Adjusted prices model a
 reinvested distribution series, not actual historical share counts or fills.
 
-Return = final equity / initial capital - 1. Daily returns include the initial
+Return = final equity / initial capital - 1. Annualized return is the geometric
+return scaled to 252 trading observations. Daily returns include the initial
 entry fee. Annualized volatility uses sample standard deviation × sqrt(252).
 Sharpe uses arithmetic daily mean / sample deviation × sqrt(252), zero risk-free
 rate; undefined when deviation is zero. Drawdown includes starting capital as

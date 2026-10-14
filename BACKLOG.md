@@ -2,7 +2,6 @@
 
 ## Next
 - Import exported JSON experiments and compare saved runs side by side.
-- Add a drawdown chart and annualized return.
 - Add train/test separation before any parameter search.
 
 ## Later
@@ -20,5 +19,6 @@
 - Calculation tests, methodology and first learning note.
 
 - Daily API refresh, completed-session filtering, dataset hashes and freshness UI.
+- Annualized return and strategy-versus-benchmark drawdown chart.
 
 - Standalone Orion Quant Lab repository, preview, CI checks, and a pinned portfolio integration.

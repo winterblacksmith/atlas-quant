@@ -73,12 +73,12 @@ or disabled by GitHub; the UI flags data more than five days old.
 
 ## Independent repository and deployment
 
-Orion Quant Lab is maintained in `winterblacksmith/atlas-quant`. Its static output is
+Orion Quant Lab is maintained in `winterblacksmith/quant-lab`. Its static output is
 `dist/quant/`, `dist/assets/quant/`, and `dist/assets/atlas-shell/`. The shell is a
 small independent copy of the portfolio's navigation, themes, and styles; Orion Quant Lab
 owns this copy so a release can be previewed and tested without the portfolio.
-The repository slug and `atlas-*` integration paths remain stable for existing links
-and scheduled release workflows; Orion Quant Lab is the public product name.
+The `atlas-*` integration paths remain stable for the portfolio release workflow;
+Orion Quant Lab is the public product name.
 Portfolio links are absolute; all Orion Quant Lab runtime dependencies are local.
 
 The portfolio stores a full commit SHA in `atlas-quant.lock.json`, checks out
@@ -87,5 +87,5 @@ three directories into its release. Orion code changes go live only when
 the portfolio pin is updated and deployed. Weekday data refresh continues through
 the portfolio workflow at 23:30 UTC, using the pinned Orion refresh script.
 No deployment secrets are copied into this repository. Pull requests use read-only
-CI permissions. The Codex daily task pushes feature branches and opens PRs; it does
-not merge or change the production pin automatically.
+CI permissions. The Codex daily task updates one persistent review branch and PR;
+it does not merge or change the production pin automatically.

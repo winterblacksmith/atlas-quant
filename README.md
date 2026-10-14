@@ -61,8 +61,8 @@ This repository owns Orion Quant Lab. The [portfolio](https://github.com/winterb
 includes a tested, pinned commit in its existing deployment. Visitors still use
 `shishirlohar.com/quant/`; the portfolio's Projects page links to both this repo
 and the live lab. Updating Orion Quant Lab's `main` does not by itself publish a new release.
-The existing `winterblacksmith/atlas-quant` repository URL and `/quant/` routes remain
-in place to keep current links and the release workflow working during the rebrand.
+The repository is named `winterblacksmith/quant-lab`; the public lab keeps its
+`/quant/` routes.
 
 Initial code was extracted from the portfolio on 2026-10-13, preserving attribution
 and methodology. The earlier implementation history remains in the portfolio repo.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-14
+
+- Added annualized return and a strategy-versus-benchmark drawdown chart to backtest results.
+
 ## 2026-10-13
 
 - Extracted Atlas Quant into its own repository with a standalone local preview.

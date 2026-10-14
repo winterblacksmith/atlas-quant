@@ -1,4 +1,4 @@
-import {backtest, parseCSV, validateRows} from './engine.js';
+import {backtest, drawdowns, parseCSV, validateRows} from './engine.js?v=62c2af789329';
 const $ = s => document.querySelector(s), money = n => n.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}), pct = n => `${(n*100).toFixed(2)}%`;
 let bundled, data, current;
 const key = 'atlas-experiments-v1';
@@ -34,15 +34,27 @@ function draw(result) {
   for(const [series,cls] of [[b,'benchmark-line'],[a,'strategy-line']])node('path',{d:series.map((p,i)=>`${i?'L':'M'}${x(i).toFixed(2)},${y(p.equity).toFixed(2)}`).join(' '),class:cls});
   node('text',{x:65,y:295,class:'chart-label'},a[0].date);node('text',{x:775,y:295,'text-anchor':'end',class:'chart-label'},a.at(-1).date);
 }
+function drawDrawdown(result) {
+  const svg=$('#drawdown-chart'); svg.querySelectorAll('g').forEach(n=>n.remove());
+  const ns='http://www.w3.org/2000/svg',g=document.createElementNS(ns,'g');svg.append(g);
+  const a=drawdowns(result.strategy.curve,result.config.capital),b=drawdowns(result.benchmark.curve,result.config.capital);
+  const lo=Math.min(-.01,...a.map(p=>p.drawdown),...b.map(p=>p.drawdown)),hi=0;
+  const x=i=>65+i/(a.length-1)*710,y=v=>265-(v-lo)/(hi-lo)*235;
+  function node(tag,attrs,text){const n=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);if(text)n.textContent=text;g.append(n);}
+  for(let i=0;i<5;i++){const v=lo+(hi-lo)*i/4;node('line',{x1:65,x2:775,y1:y(v),y2:y(v),class:'chart-grid'});node('text',{x:55,y:y(v)+4,'text-anchor':'end',class:'chart-label'},`${(v*100).toFixed(0)}%`);}
+  for(const [series,cls] of [[b,'benchmark-line'],[a,'strategy-line']])node('path',{d:series.map((p,i)=>`${i?'L':'M'}${x(i).toFixed(2)},${y(p.drawdown).toFixed(2)}`).join(' '),class:cls});
+  node('text',{x:65,y:295,class:'chart-label'},a[0].date);node('text',{x:775,y:295,'text-anchor':'end',class:'chart-label'},a.at(-1).date);
+}
 function render(experiment) {
   current=experiment;const r=current.result,s=r.strategy.metrics,b=r.benchmark.metrics;
   $('#empty').hidden=true;$('#results').hidden=false;
   $('#result-title').textContent=`${current.data.ticker} / ${r.config.strategy==='hold'?'Buy and hold':'Momentum'}`;
   $('#range').textContent=`${r.strategy.curve[0].date} → ${r.strategy.curve.at(-1).date}`;
   $('#metrics').replaceChildren();
-  const defs=[['Total return','totalReturn',pct,'Change in portfolio value after modeled costs.'],['Sharpe ratio','sharpe',v=>v===null?'N/A':v.toFixed(2),'Daily mean / daily sample deviation × √252; zero risk-free rate.'],['Max drawdown','maxDrawdown',pct,'Largest decline from a prior peak, including starting capital.'],['Volatility','volatility',pct,'Daily sample standard deviation × √252.']];
+  const defs=[['Total return','totalReturn',pct,'Change in portfolio value after modeled costs.'],['Annualized return','annualizedReturn',pct,'Geometric return scaled to 252 trading observations.'],['Sharpe ratio','sharpe',v=>v===null?'N/A':v.toFixed(2),'Daily mean / daily sample deviation × √252; zero risk-free rate.'],['Max drawdown','maxDrawdown',pct,'Largest decline from a prior peak, including starting capital.'],['Volatility','volatility',pct,'Daily sample standard deviation × √252.']];
   for(const [label,key,format,help] of defs){const box=el('div','','metric');box.title=help;box.tabIndex=0;box.setAttribute('aria-label',`${label}: ${format(s[key])}. ${help}`);box.append(el('span',label),el('strong',format(s[key])),el('p',`B&H ${format(b[key])}`));$('#metrics').append(box);}
   draw(r);
+  drawDrawdown(r);
   $('#interpretation').textContent=`Final value ${money(s.finalValue)} vs. ${money(b.finalValue)} for buy and hold. Strategy costs: ${money(r.strategy.costs)}. Difference: ${((s.totalReturn-b.totalReturn)*100).toFixed(2)} percentage points. This is an in-sample historical result.`;
   $('#trade-count').textContent=`${r.strategy.trades.length} executions`;
   $('#trades').replaceChildren();

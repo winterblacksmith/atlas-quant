@@ -5,7 +5,8 @@
 - Add train/test separation before any parameter search.
 
 ## Later
-- Additional strategies and Strategy Arena using the shared engine.
+- Additional strategies and Strategy Arena using the priorities and readiness rules in
+  `STRATEGY_ROADMAP.md`; scheduled strategy work should read it first.
 - Evaluate a supported market-data provider if the unofficial endpoint becomes unreliable.
 - Server-side API, shared persistence, and optional React interface if needed.
 - Walk-forward validation, then advanced research.

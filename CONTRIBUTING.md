@@ -4,7 +4,8 @@
    Keep all ongoing lab work in its one open pull request; do not create additional
    feature branches or pull requests.
 2. Check that pull request and choose one bounded item from `BACKLOG.md`; read
-   `ARCHITECTURE.md` before changing numerical behavior.
+   `ARCHITECTURE.md` before changing numerical behavior. For strategy work, read
+   `STRATEGY_ROADMAP.md` before selecting or specifying the change.
 3. Implement it and add meaningful regression tests when behavior changes.
 4. Run `npm run check`. For interface changes, preview the actual page at narrow
    and wide widths and check keyboard access and reduced motion.
@@ -31,6 +32,7 @@ same branch from the new `origin/main` only if no unmerged work remains. It must
 not buy services, use a paid fallback, merge PRs, or deploy without a new instruction.
 Every run must report concrete changes and improvements, commit and PR when present,
 checks and results, or say that no changes were made and why.
+For strategy work, use `STRATEGY_ROADMAP.md` as the readiness and priority guide.
 
 Local scheduled work requires the computer awake, Codex running, and GitHub access.
 Future unattended runs remain subject to the app's permissions and usage limits.

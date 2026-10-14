@@ -3,6 +3,8 @@
 - This is a standalone static research lab. Keep it dependency-light and free of
   new paid services. Preserve `/quant/` and `/quant/lab/` URLs.
 - Read ARCHITECTURE.md for timing, adjusted-price assumptions, and metric definitions.
+  Before strategy work, read STRATEGY_ROADMAP.md and follow its priority and readiness
+  checks.
 - Keep development on the persistent `codex/orion-quant-rebrand` branch and its
   single open pull request. Never create a date-specific branch or overwrite
   unrelated local work.

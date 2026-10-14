@@ -4,6 +4,7 @@
 
 - Renamed the public project to Orion Quant Lab while preserving existing site URLs and repository links.
 - Added annualized return and a strategy-versus-benchmark drawdown chart to backtest results.
+- Added a research roadmap for staged strategy expansion and a separate options-pricing module.
 
 ## 2026-10-13
 

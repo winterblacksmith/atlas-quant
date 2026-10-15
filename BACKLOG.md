@@ -23,3 +23,4 @@
 - Annualized return and strategy-versus-benchmark drawdown chart.
 
 - Standalone Orion Quant Lab repository, preview, CI checks, and a pinned portfolio integration.
+- Public research field guide with purpose, implemented-versus-planned record, workflow, architecture, and explicit backtest limitations.

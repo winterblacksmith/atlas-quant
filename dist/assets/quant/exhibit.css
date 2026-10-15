@@ -3,3 +3,94 @@
 
 /* Keep complete button borders separate from text-link underline effects. */
 .exhibit a.exhibit-button:is(:hover,:focus-visible){border-color:var(--exhibit-ink);background-image:none}
+
+/* Research record and process diagram extend the field-guide design. */
+.research-sequence {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 34px 0;
+}
+.research-sequence span {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 105px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  color: var(--exhibit-ink);
+  font: 10px ui-monospace, monospace;
+  letter-spacing: 1px;
+}
+.research-sequence strong {
+  font: 24px Georgia, serif;
+  letter-spacing: 0;
+}
+.why-built {
+  margin-top: 30px;
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  background: var(--exhibit-paper);
+}
+.why-built p {
+  max-width: 700px;
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.research-method {
+  margin-top: 32px;
+  padding: 26px 0;
+  border-block: 1px solid var(--line);
+}
+.research-method h3 {
+  margin: 0 0 25px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.research-method-grid,
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+}
+.research-method ol,
+.status-panel ul {
+  padding-left: 20px;
+  margin: 15px 0 0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.research-method li,
+.status-panel li {
+  padding-left: 4px;
+  margin-bottom: 9px;
+}
+.status-grid {
+  gap: 18px;
+  margin: 30px 0;
+}
+.status-panel {
+  border: 1px solid var(--line);
+  padding: 24px;
+  background: var(--exhibit-paper);
+}
+.status-panel h3 {
+  margin: 14px 0;
+  font-size: 17px;
+  font-weight: 500;
+}
+.architecture-note {
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+.architecture-note p {
+  font-size: 14px;
+  line-height: 1.8;
+}
+@media (max-width: 650px) {
+  .research-method-grid,
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+}

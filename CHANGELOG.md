@@ -2,6 +2,8 @@
 
 ## 2026-10-15
 
+- Added portable experiment import and side-by-side comparison for up to three
+  archived runs. Imported results are validated and recomputed from their saved data.
 - Added a moving-average trend filter to the historical backtester, preserving
   previous-close signals, next-close execution, transaction costs, and the
   same-asset buy-and-hold benchmark.

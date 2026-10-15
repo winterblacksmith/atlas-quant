@@ -64,6 +64,9 @@ Each saved run records engine version, config,
 source metadata, all input rows, results and timestamp. Exports survive browser
 storage clearing. Local storage is limited to the latest 10 experiments. There
 is no account, cloud sync, live quote feed, or claim of predictive performance.
+Imported experiment JSON is schema-checked and its results are recomputed from the
+embedded rows and configuration before storage or comparison; exported metrics are
+not trusted as authoritative.
 
 ## Daily data refresh
 

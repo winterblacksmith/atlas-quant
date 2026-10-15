@@ -94,3 +94,7 @@
     grid-template-columns: 1fr;
   }
 }
+
+.specimen-wide {
+  grid-column: 1 / -1;
+}

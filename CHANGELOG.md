@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-15
+
+- Added a moving-average trend filter to the historical backtester, preserving
+  previous-close signals, next-close execution, transaction costs, and the
+  same-asset buy-and-hold benchmark.
+- Added a separate Black–Scholes–Merton calculator for theoretical European
+  call/put values, Greeks, and hypothetical spot scenarios. It does not imply
+  historical options trading.
+- Added independent tests for signal timing, warmup, fees, lookahead prevention,
+  standard option values, parity, numerical Greeks, and limiting cases.
+
 ## 2026-10-14
 
 - Reframed the public field guide for graduate research review: added the project's purpose, a concrete research workflow, implemented architecture, current capabilities, and a separately labeled roadmap. Replaced the illustrative performance chart with a research-process diagram.

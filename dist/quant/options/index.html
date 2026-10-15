@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>European Options Pricer — Orion Quant Lab</title>
+    <meta
+      name="description"
+      content="Explore theoretical European call and put values with a transparent Black–Scholes–Merton calculator in Orion Quant Lab."
+    />
+    <meta name="theme-color" content="#101011" />
+    <link rel="canonical" href="https://shishirlohar.com/quant/options/" />
+    <meta property="og:title" content="European Options Pricer — Orion Quant Lab" />
+    <meta
+      property="og:description"
+      content="An educational Black–Scholes–Merton calculator with Greeks and hypothetical scenarios."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shishirlohar.com/quant/options/" />
+    <link rel="icon" href="/assets/atlas-shell/favicon.svg?v=727f2134fbea" />
+    <link rel="stylesheet" href="/assets/atlas-shell/style.css?v=c8e5262a760c" />
+    <script src="/assets/atlas-shell/theme.js?v=e03df0f86d0c"></script>
+    <link rel="stylesheet" href="/assets/quant/quant.css?v=2490f239bf4d" />
+    <link rel="stylesheet" href="/assets/quant/options.css?v=e98d9a12513a" />
+  </head>
+  <body data-page="quant">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="ambient" aria-hidden="true"></div>
+    <div class="shell">
+      <header>
+        <a class="name" href="https://shishirlohar.com/">shishir lohar</a>
+        <nav aria-label="Main navigation">
+          <a href="https://shishirlohar.com/" data-page="about">about</a
+          ><a href="https://shishirlohar.com/projects/" data-page="projects">projects</a
+          ><a href="https://shishirlohar.com/experience/" data-page="experience">experience</a
+          ><a href="/quant/" data-page="quant">quant lab</a>
+        </nav>
+        <div class="tools">
+          <button id="motion" aria-label="Pause animations" title="Pause animations">Ⅱ</button
+          ><button id="theme" aria-label="Switch color theme" title="Switch color theme">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+              />
+            </svg></button
+          ><button id="commands" aria-label="Open command menu" title="Command menu (⌘K or Ctrl K)">
+            <kbd>⌘</kbd><kbd>K</kbd>
+          </button>
+        </div>
+      </header>
+      <main id="main" class="options-page">
+        <div class="lab-heading">
+          <div>
+            <p class="eyebrow"><a href="/quant/">ORION QUANT LAB</a> / OPTIONS PRICER</p>
+            <h1>Price an assumption.</h1>
+            <p>Explore a mathematical model of European calls and puts.</p>
+          </div>
+          <span class="version">MODEL / 01</span>
+        </div>
+        <p class="options-intro">
+          Black–Scholes–Merton estimates a <strong>theoretical option value</strong> from six
+          inputs. Change an assumption and observe how the value and sensitivities change. This
+          calculator uses hypothetical inputs; it does not use an option chain or recommend a trade.
+        </p>
+        <div class="lab-grid">
+          <aside class="panel">
+            <form id="options-form">
+              <p class="eyebrow">MODEL INPUTS</p>
+              <p class="fine">
+                The starting values are a textbook-style example, not a market quote. Rates and
+                yields use continuous compounding.
+              </p>
+              <label
+                >Underlying price · USD<input
+                  id="spot"
+                  type="number"
+                  min="0.01"
+                  step="any"
+                  value="100"
+                  required
+              /></label>
+              <label
+                >Strike price · USD<input
+                  id="strike"
+                  type="number"
+                  min="0.01"
+                  step="any"
+                  value="100"
+                  required
+              /></label>
+              <label
+                >Time to expiry · years<input
+                  id="years"
+                  type="number"
+                  min="0.001"
+                  max="100"
+                  step="any"
+                  value="1"
+                  required
+              /></label>
+              <label
+                >Risk-free rate · % per year<input
+                  id="rate"
+                  type="number"
+                  step="any"
+                  value="5"
+                  required
+              /></label>
+              <label
+                >Dividend yield · % per year<input
+                  id="dividend"
+                  type="number"
+                  step="any"
+                  value="0"
+                  required
+              /></label>
+              <label
+                >Volatility · % per year<input
+                  id="volatility"
+                  type="number"
+                  min="0.01"
+                  max="1000"
+                  step="any"
+                  value="20"
+                  required
+              /></label>
+              <button class="launch" type="submit">
+                Calculate values <span aria-hidden="true">↗</span>
+              </button>
+            </form>
+            <p id="options-status" role="status" aria-live="polite"></p>
+          </aside>
+          <div class="results">
+            <section class="panel" id="options-empty">
+              <h2>Start with the assumptions.</h2>
+              <p>Enter six inputs and calculate theoretical call and put values.</p>
+            </section>
+            <div id="options-results" hidden>
+              <section class="panel">
+                <p class="eyebrow">THEORETICAL VALUE / PER OPTION UNIT</p>
+                <div class="options-values">
+                  <div><span>European call</span><strong id="call-price"></strong></div>
+                  <div><span>European put</span><strong id="put-price"></strong></div>
+                </div>
+                <p class="fine" id="parity"></p>
+              </section>
+              <section class="panel">
+                <h2>How sensitive is the value?</h2>
+                <p class="fine">
+                  These are model derivatives at the chosen inputs, not estimates of future profit.
+                </p>
+                <div class="table-wrap">
+                  <table class="options-table">
+                    <thead>
+                      <tr>
+                        <th>Measure</th>
+                        <th>Call</th>
+                        <th>Put</th>
+                      </tr>
+                    </thead>
+                    <tbody id="greeks"></tbody>
+                  </table>
+                </div>
+                <p class="fine">
+                  Delta: value change per $1 underlying move. Gamma: delta change per $1. Vega:
+                  value change per 1 percentage-point volatility move. Theta: value change per
+                  calendar day. Rho: value change per 1 percentage-point rate move. These are local
+                  sensitivities, not exact outcomes for large changes.
+                </p>
+              </section>
+              <section class="panel">
+                <h2>One input at a time.</h2>
+                <p class="fine">
+                  Hypothetical spot-price scenarios; strike, time, rates, dividend yield, and
+                  volatility stay fixed. Each row is recalculated from the model.
+                </p>
+                <div class="table-wrap">
+                  <table class="options-table">
+                    <thead>
+                      <tr>
+                        <th>Spot change</th>
+                        <th>Spot</th>
+                        <th>Call value</th>
+                        <th>Put value</th>
+                      </tr>
+                    </thead>
+                    <tbody id="scenarios"></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+        <section class="panel methodology options-methodology">
+          <p class="eyebrow">MODEL NOTES</p>
+          <h2>What the calculation assumes.</h2>
+          <p>
+            The model prices European options, exercisable only at expiry. It assumes constant
+            volatility and risk-free rate, a continuous dividend yield, and frictionless trading.
+            Actual options have changing volatility, bid/ask spreads, and other market effects. A
+            theoretical price is not a tradable quote or a historical backtest.
+          </p>
+          <p>
+            The displayed prices use
+            <code>call = S·e<sup>−qT</sup>·N(d₁) − K·e<sup>−rT</sup>·N(d₂)</code> and put–call
+            parity <code>call − put = S·e<sup>−qT</sup> − K·e<sup>−rT</sup></code
+            >. The implementation has tests for a standard numerical benchmark, parity, Greeks, and
+            limiting behavior. Read the
+            <a href="https://doi.org/10.1086/260062">original paper ↗</a> or the
+            <a href="https://github.com/winterblacksmith/quant-lab">source code ↗</a>.
+          </p>
+          <p>
+            To study historical options trading, Orion would need point-in-time contract chains,
+            executable prices, and an explicit entry, exit, and cost model. That work is separate
+            from this calculator. <a href="/quant/lab/">Return to strategy backtesting ↗</a>
+          </p>
+        </section>
+        <noscript><p>This calculator needs JavaScript. Enable it and reload.</p></noscript>
+      </main>
+      <footer>
+        <div class="footer-top">
+          <div class="socials">
+            <a href="https://github.com/winterblacksmith/quant-lab" aria-label="GitHub">github ↗</a
+            ><a href="https://www.linkedin.com/in/shishirlohar/" aria-label="LinkedIn"
+              >linkedin ↗</a
+            ><a href="mailto:shishirlohar@gmail.com">email ↗</a>
+          </div>
+          <a
+            href="https://shishirlohar.com/assets/shishir-lohar-resume.pdf?v=850dfe616178"
+            target="_blank"
+            rel="noopener"
+            >résumé ↗</a
+          >
+        </div>
+        <div class="footer-bottom">
+          <span>Atlanta, Georgia</span><span>2026 © Shishir Lohar</span>
+        </div>
+      </footer>
+    </div>
+    <dialog id="palette" aria-labelledby="palette-title">
+      <div class="palette-heading">
+        <h2 id="palette-title">Go somewhere.</h2>
+        <button id="close-palette" aria-label="Close command menu">esc</button>
+      </div>
+      <input
+        id="command-search"
+        aria-label="Search commands"
+        placeholder="Search pages and links…"
+        autocomplete="off"
+      />
+      <div id="command-list">
+        <a href="https://shishirlohar.com/">About <span>01</span></a
+        ><a href="https://shishirlohar.com/projects/">Projects <span>02</span></a
+        ><a href="https://shishirlohar.com/experience/">Experience <span>03</span></a
+        ><a href="/quant/">Orion Quant Lab <span>04</span></a
+        ><a href="/quant/lab/">Strategy lab <span>05</span></a
+        ><a href="/quant/options/">Options pricer <span>06</span></a
+        ><a href="https://www.linkedin.com/in/shishirlohar/">LinkedIn <span>↗</span></a
+        ><a href="https://github.com/winterblacksmith/quant-lab">GitHub <span>↗</span></a
+        ><button id="command-theme">Switch color theme <span>◐</span></button>
+      </div>
+      <p id="command-empty" hidden>No matching commands.</p>
+      <div class="palette-help">↑ ↓ navigate <span>↵ open</span></div>
+    </dialog>
+    <script src="/assets/atlas-shell/app.js?v=d10815200a08" defer></script>
+    <script type="module" src="/assets/quant/options.js?v=1d08fa6ca25c"></script>
+  </body>
+</html>

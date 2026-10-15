@@ -1,19 +1,24 @@
 # Orion Quant Lab
 
-A small, transparent research lab for asking how a trading rule behaved in the past.
-Start with the museum-style field guide, then run a browser-based experiment using
-SPY daily adjusted prices or your own CSV.
+A small, transparent research lab for asking how a trading rule behaved in the past
+and how an options-pricing model responds to its assumptions. Start with the
+museum-style field guide, then run a browser-based historical experiment or an
+educational European options calculation.
 
-**[Take the tour](https://shishirlohar.com/quant/) · [Enter the lab](https://shishirlohar.com/quant/lab/)**
+**[Take the tour](https://shishirlohar.com/quant/) · [Run a backtest](https://shishirlohar.com/quant/lab/) · [Explore options pricing](https://shishirlohar.com/quant/options/)**
 
 ## What you can investigate
 
-- Compare time-series momentum with buy and hold on the same history.
+- Compare time-series momentum or a moving-average trend filter with buy and hold
+  on the same history. The moving-average rule uses the previous close and the
+  average of the previous `N` closes; a signal executes at the next close.
 - Change dates, lookback, starting capital, and transaction costs.
 - Inspect daily equity, geometric annualized return, drawdown, volatility, Sharpe
   ratio, and individual trades.
 - Save experiments locally and export full experiment JSON or daily equity CSV.
 - Import a different daily series with `date,close` columns.
+- Calculate theoretical European call and put values, Greeks, and hypothetical
+  spot-price scenarios with a separate Black–Scholes–Merton module.
 
 The results are historical evidence, not a forecast or proof that a rule will work
 in the future. Annualized return assumes 252 trading observations. The drawdown
@@ -24,6 +29,8 @@ data and testing requirements for future strategies and options research.
 This is a historical simulation with imaginary money. There is no brokerage
 connection or real trading. Signals use prior closes and execute at the next close;
 the tests cover timing, fees, validation, and metric calculations.
+The options calculator is not a backtest or trading strategy. It has no historical
+option-chain data and does not produce a tradable quote.
 
 ## Run locally
 
@@ -54,6 +61,9 @@ weekday schedule, so the repository snapshot may be older than the live website.
 | `dist/quant/` | Field guide and research workspace |
 | `dist/assets/quant/engine.js` | Pure backtest and metric functions |
 | `dist/assets/quant/lab.js` | Inputs, charts, imports, exports, local saves |
+| `dist/quant/options/` | Educational European options calculator |
+| `dist/assets/quant/options-engine.js` | Black–Scholes–Merton prices and Greeks |
+| `dist/assets/quant/options.js` | Options form, results, and hypothetical scenarios |
 | `dist/assets/atlas-shell/` | Independent navigation, theme, and base styles |
 | `scripts/refresh-market-data.py` | Validated daily adjusted-price refresh |
 | `tests/` | Engine and refresh regression tests |

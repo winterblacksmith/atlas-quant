@@ -15,6 +15,10 @@
 ## Completed
 - `/quant/` landing page and `/quant/lab/` research workspace.
 - Historical SPY snapshot, CSV import, configurable momentum and buy-and-hold.
+- Moving-average trend filter with delayed signals, the same fees and benchmark,
+  and hand-checked timing/fee tests.
+- Separate Black–Scholes–Merton European options calculator with Greeks,
+  hypothetical spot scenarios, and numerical validation tests.
 - Delayed signal execution, transaction costs, benchmark, metrics, chart, trades.
 - Browser-local experiments, self-contained JSON and equity CSV export.
 - Calculation tests, methodology and first learning note.

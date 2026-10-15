@@ -2,7 +2,8 @@
 
 ## First release
 
-Orion Quant Lab lives at `/quant/`, with the research workspace at `/quant/lab/`.
+Orion Quant Lab lives at `/quant/`, with the backtest workspace at `/quant/lab/`
+and a separate educational options calculator at `/quant/options/`.
 The existing portfolio is a dependency-free static website served by Nginx.
 This release keeps that deployment model: browser ES modules provide the interface,
 a pure reusable JavaScript engine provides calculations, and a bundled SPY daily
@@ -33,6 +34,29 @@ Sharpe uses arithmetic daily mean / sample deviation × sqrt(252), zero risk-fre
 rate; undefined when deviation is zero. Drawdown includes starting capital as
 an initial high-water mark. Annualization assumes daily trading observations;
 import validation cannot independently verify a provider's trading calendar.
+
+The moving-average filter owns the asset when the close at `t-1` is strictly
+greater than the arithmetic average of closes `t-lookback` through `t-1`.
+Equality means cash. It uses the same delayed execution, long-or-cash sizing,
+transaction costs, and buy-and-hold benchmark as momentum. At least `lookback`
+warmup observations must precede the selected start date.
+
+## European options calculator
+
+The independent Black–Scholes–Merton module calculates theoretical European
+call and put values with continuous dividend yield from spot, strike, positive
+time in years, continuously compounded risk-free rate, continuously compounded
+dividend yield, and positive annualized volatility. It also reports delta,
+gamma, vega, theta, and rho. The interface converts annual theta to per-calendar-
+day values and vega/rho to the effect of a one-percentage-point input change.
+The scenario table changes spot alone, holding every other input fixed.
+
+The normal CDF uses the Abramowitz–Stegun 26.2.17 approximation (maximum
+absolute CDF error about 7.5e-8). Tests check a standard numerical benchmark,
+put–call parity, monotonicity, numerical derivatives of Greeks, and
+limiting cases. The calculator assumes European exercise, constant volatility
+and rates, continuous yield, and frictionless trading. It uses hypothetical
+inputs, not option-chain data or a historical options strategy.
 
 ## Reproducibility and boundaries
 

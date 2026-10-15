@@ -1,4 +1,4 @@
-import {backtest, drawdowns, parseCSV, validateRows} from './engine.js?v=62c2af789329';
+import {backtest, drawdowns, parseCSV, validateRows} from './engine.js?v=1f4519778a62';
 const $ = s => document.querySelector(s), money = n => n.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}), pct = n => `${(n*100).toFixed(2)}%`;
 let bundled, data, current;
 const key = 'atlas-experiments-v1';
@@ -48,7 +48,8 @@ function drawDrawdown(result) {
 function render(experiment) {
   current=experiment;const r=current.result,s=r.strategy.metrics,b=r.benchmark.metrics;
   $('#empty').hidden=true;$('#results').hidden=false;
-  $('#result-title').textContent=`${current.data.ticker} / ${r.config.strategy==='hold'?'Buy and hold':'Momentum'}`;
+  const strategyNames={hold:'Buy and hold',momentum:'Time-series momentum',sma:'Moving-average trend filter'};
+  $('#result-title').textContent=`${current.data.ticker} / ${strategyNames[r.config.strategy]}`;
   $('#range').textContent=`${r.strategy.curve[0].date} → ${r.strategy.curve.at(-1).date}`;
   $('#metrics').replaceChildren();
   const defs=[['Total return','totalReturn',pct,'Change in portfolio value after modeled costs.'],['Annualized return','annualizedReturn',pct,'Geometric return scaled to 252 trading observations.'],['Sharpe ratio','sharpe',v=>v===null?'N/A':v.toFixed(2),'Daily mean / daily sample deviation × √252; zero risk-free rate.'],['Max drawdown','maxDrawdown',pct,'Largest decline from a prior peak, including starting capital.'],['Volatility','volatility',pct,'Daily sample standard deviation × √252.']];
@@ -70,7 +71,17 @@ $('#backtest-form').addEventListener('submit',event=>{
     status('Backtest complete. Results reflect the settings at the time of this run.');
   }catch(error){status(error.message);}
 });
-$('#strategy').addEventListener('change',()=>{const hold=$('#strategy').value==='hold';$('#lookback').disabled=hold;$('#rule').textContent=hold?'Buy at the first selected close and hold through the final close.':'Own the asset when its prior closing price is above its close N sessions earlier. Otherwise, hold cash.';});
+$('#strategy').addEventListener('change',()=>{
+  const strategy=$('#strategy').value;
+  $('#lookback').disabled=strategy==='hold';
+  $('#lookback').min=strategy==='sma'?'2':'1';
+  if(strategy==='sma' && Number($('#lookback').value)<2)$('#lookback').value='2';
+  $('#rule').textContent={
+    hold:'Buy at the first selected close and hold through the final close.',
+    momentum:'Own the asset when its prior closing price is above its close N sessions earlier. Otherwise, hold cash.',
+    sma:'Own the asset when the prior close is strictly above the average of the previous N closes (N ≥ 2). Otherwise, hold cash.'
+  }[strategy];
+});
 $('#dataset').addEventListener('change',()=>{
   const custom=$('#dataset').value==='csv';$('#import-fields').hidden=!custom;$('#check-data').hidden=custom;$('#freshness').textContent='';
   if(!custom && bundled)setData(bundled);else{data=null;current=null;$('#results').hidden=true;$('#empty').hidden=false;$('#run').disabled=true;$('#csv').value='';$('#data-note').textContent='Import a daily price series to begin.';status('Choose a CSV file.');}

@@ -1,0 +1,84 @@
+.options-page {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.options-intro {
+  max-width: 730px;
+  margin: -10px 0 34px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.options-intro strong {
+  color: var(--strong);
+  font-weight: 550;
+}
+.options-page .lab-grid {
+  grid-template-columns: 300px minmax(0, 1fr);
+}
+.options-page .lab-grid > * {
+  min-width: 0;
+}
+.options-page .eyebrow {
+  color: var(--accent);
+}
+.options-values {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.options-values > div {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+}
+.options-values span {
+  display: block;
+  font-size: 12px;
+}
+.options-values strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--strong);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+.options-table {
+  white-space: normal;
+}
+.options-table td:first-child,
+.options-table th:first-child {
+  text-align: left;
+}
+.options-table td:not(:first-child),
+.options-table th:not(:first-child) {
+  text-align: right;
+}
+.options-table .base-scenario td {
+  color: var(--accent);
+}
+.options-methodology {
+  margin-top: 12px;
+  line-height: 1.8;
+}
+.options-methodology code {
+  color: var(--strong);
+  white-space: normal;
+}
+#options-status {
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1.6;
+}
+@media (max-width: 760px) {
+  .options-page .lab-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .options-values {
+    grid-template-columns: 1fr;
+  }
+}

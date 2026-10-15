@@ -1,4 +1,4 @@
-export const VERSION = '1.0.0';
+export const VERSION = '1.1.0';
 export function validateRows(rows) {
   if (!Array.isArray(rows) || rows.length < 3 || rows.length > 20000) throw new Error('Provide 3–20,000 daily observations.');
   rows.forEach((r, i) => {
@@ -34,17 +34,30 @@ export function metrics(curve, capital) {
 export function backtest(rows, config) {
   validateRows(rows);
   const {start,end,capital,lookback,feeBps,strategy} = config;
-  if (!['momentum','hold'].includes(strategy) || !Number.isFinite(capital) || capital <= 0 || capital > 1e9 || !Number.isInteger(lookback) || lookback < 1 || lookback > 252 || !Number.isFinite(feeBps) || feeBps < 0 || feeBps > 100) throw new Error('Check capital, lookback (1–252), and costs (0–100 bps).');
+  if (!['momentum','sma','hold'].includes(strategy) || !Number.isFinite(capital) || capital <= 0 || capital > 1e9 || !Number.isInteger(lookback) || lookback < (strategy === 'sma' ? 2 : 1) || lookback > 252 || !Number.isFinite(feeBps) || feeBps < 0 || feeBps > 100) throw new Error('Check capital, lookback (2–252 for moving average), and costs (0–100 bps).');
   if (![start,end].every(d=>/^\d{4}-\d{2}-\d{2}$/.test(d) && Number.isFinite(Date.parse(d)) && new Date(d).toISOString().slice(0,10) === d) || start > end || start < rows[0].date || end > rows.at(-1).date) throw new Error('Choose a valid date range within this dataset.');
   const first = rows.findIndex(r=>r.date>=start), selected = rows.filter(r=>r.date>=start && r.date<=end);
   if (selected.length < 3) throw new Error('Choose at least three trading observations.');
   if (strategy === 'momentum' && first < lookback + 1) throw new Error(`Momentum needs ${lookback+1} observations before the start date. Choose a later start.`);
+  if (strategy === 'sma' && first < lookback) throw new Error(`Moving average needs ${lookback} observations before the start date. Choose a later start.`);
+  const prefix = strategy === 'sma' ? [0] : null;
+  if (prefix) for (const row of rows) {
+    const sum = prefix.at(-1) + row.close;
+    if (!Number.isFinite(sum)) throw new Error('Prices are too large for a moving-average calculation.');
+    prefix.push(sum);
+  }
+  function target(kind, i) {
+    if (kind === 'hold') return true;
+    if (kind === 'momentum') return rows[i-1].close > rows[i-1-lookback].close;
+    const priorAverage = (prefix[i] - prefix[i-lookback]) / lookback;
+    return rows[i-1].close > priorAverage;
+  }
   function simulate(kind) {
     let cash = capital, shares = 0, costs = 0;
     const trades = [], curve = [], fee = feeBps / 10000;
     selected.forEach((r,j)=>{
       const i = first+j;
-      const own = kind === 'hold' || rows[i-1].close > rows[i-1-lookback].close;
+      const own = target(kind, i);
       if (own && !shares) {
         shares = cash / (r.close*(1+fee));
         const cost = shares*r.close*fee; costs += cost; cash = 0;

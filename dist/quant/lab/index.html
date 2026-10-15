@@ -51,6 +51,9 @@
             <p class="eyebrow"><a href="/quant/">ORION QUANT LAB</a> / RESEARCH LAB</p>
             <h1>Test an idea.</h1>
             <p>One asset. Clear rules. An honest comparison.</p>
+            <p class="fine">
+              <a href="/quant/options/">Explore the separate European options pricer ↗</a>
+            </p>
           </div>
           <span class="version">LAB / 01</span>
         </div>
@@ -78,6 +81,7 @@
               ><label
                 >Strategy<select id="strategy">
                   <option value="momentum">Time-series momentum</option>
+                  <option value="sma">Moving-average trend filter</option>
                   <option value="hold">Buy and hold</option>
                 </select></label
               >
@@ -221,9 +225,9 @@
             <summary>Execution &amp; data</summary>
             <p>
               A signal uses the previous session’s close and executes at the current close. It first
-              earns the next session’s return. Warmup data comes before your chosen start date. Both
-              strategies pay the same proportional costs; fractional units are allowed. Cash earns
-              zero. No leverage, taxes, separate slippage, or forced final sale.
+              earns the next session’s return. Warmup data comes before your chosen start date. Each
+              strategy and the benchmark pay the same proportional costs; fractional units are
+              allowed. Cash earns zero. No leverage, taxes, separate slippage, or forced final sale.
             </p>
             <p>
               SPY uses Yahoo Finance daily adjusted closes from 2020 onward. The data date and last
@@ -233,6 +237,16 @@
               Adjusted prices incorporate distributions and splits; they are a research
               approximation, not executable historical quotes.
               <a href="https://finance.yahoo.com/quote/SPY/history/">Data source ↗</a>
+            </p>
+          </details>
+          <details>
+            <summary>Strategy rules</summary>
+            <p>
+              Time-series momentum compares yesterday’s close with the close one lookback earlier.
+              The moving-average filter compares yesterday’s close with the average of the preceding
+              lookback closes, including yesterday. It owns the asset only when yesterday’s close is
+              strictly above that average; equality means cash. Both rules act at today’s close and
+              use the same buy-and-hold benchmark and trade-cost setting.
             </p>
           </details>
           <details>
@@ -266,8 +280,7 @@
       <footer>
         <div class="footer-top">
           <div class="socials">
-            <a href="https://github.com/winterblacksmith/quant-lab" aria-label="GitHub"
-              >github ↗</a
+            <a href="https://github.com/winterblacksmith/quant-lab" aria-label="GitHub">github ↗</a
             ><a href="https://www.linkedin.com/in/shishirlohar/" aria-label="LinkedIn"
               >linkedin ↗</a
             ><a href="mailto:shishirlohar@gmail.com">email ↗</a>
@@ -313,6 +326,6 @@
       <div class="palette-help">↑ ↓ navigate <span>↵ open</span></div>
     </dialog>
     <script src="/assets/atlas-shell/app.js?v=d10815200a08" defer></script>
-    <script type="module" src="/assets/quant/lab.js?v=5debfd7dd4f0"></script>
+    <script type="module" src="/assets/quant/lab.js?v=42f60fc20d66"></script>
   </body>
 </html>

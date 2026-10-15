@@ -20,14 +20,14 @@ strategy until its rule can be calculated by hand on a small fixture.
 These fit the current dataset and engine. Add only one per pull request or scheduled
 task increment.
 
-### Simple moving-average trend filter
+### Simple moving-average trend filter — implemented
 
 - **Rule:** at close `t`, own the asset when `close[t-1]` is above the simple average
   ending at `t-1`; otherwise hold cash. Execute any change at `close[t]`.
 - **Parameter:** integer lookback, initially 2–252 observations.
 - **Why first:** it adds a different trend definition without new data or sizing
   machinery. Faber describes a related monthly moving-average timing model.
-- **Required tests:** warmup boundary, equality behavior, delayed execution, fees on
+- **Validation:** warmup boundary, equality behavior, delayed execution, fees on
   a crossover, and proof that future prices cannot change earlier positions.
 
 ### Dual moving-average crossover
@@ -85,23 +85,25 @@ Before the first multi-asset strategy, land the data model and validation separa
 Then add one simple equal-weight or relative-momentum experiment with an explicit
 cash rule and benchmark.
 
-## Black–Scholes belongs in an options module
+## Black–Scholes has a separate options module
 
 “Black shoals” usually refers to **Black–Scholes**, more fully the
 Black–Scholes–Merton option-pricing model. It produces a theoretical option value
 under specified assumptions; it is not an entry-and-exit strategy by itself.
 
-An educational pricer could be useful later as a separate module:
+The educational calculator at `/quant/options/` now provides:
 
 - inputs: spot price, strike, time to expiry, risk-free rate, dividend yield, and
   volatility;
 - outputs: European call and put values plus clearly defined Greeks;
-- validation: put-call parity, monotonicity, limiting cases, and published fixtures;
-- interface: scenario curves showing how value and Greeks change with one input;
+- validation: put-call parity, spot monotonicity, limiting cases, a standard
+  benchmark, and numerical checks on Greeks;
+- interface: a spot-scenario table that changes one input at a time;
 - disclosure: European exercise, constant volatility and rates, frictionless hedging,
   and the difference between theoretical and traded prices.
 
-Do **not** present a Black–Scholes backtest using only the current SPY close history.
+Do **not** present the calculator as a Black–Scholes backtest using only the
+current SPY close history.
 A credible historical options strategy also needs point-in-time contract chains,
 strikes, expirations, bid/ask or executable prices, implied volatility, rates,
 dividends, exercise and assignment rules, contract multipliers, and corporate-action

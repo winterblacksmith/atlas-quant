@@ -13,3 +13,29 @@ test('valid CSV and config validation',()=>{assert.equal(parseCSV('date,close\n2
 test('sample volatility matches independently calculated daily returns',()=>{const m=metrics([{equity:110},{equity:99},{equity:108.9}],100);const mean=1/30;const variance=((.1-mean)**2+(-.1-mean)**2+(.1-mean)**2)/2;assert.ok(Math.abs(m.volatility-Math.sqrt(variance*252))<1e-10);});
 test('annualized return uses geometric growth over trading observations',()=>{const m=metrics([{equity:101},{equity:102.01}],100);assert.ok(Math.abs(m.annualizedReturn-(1.0201**126-1))<1e-10);});
 test('drawdowns track declines from starting capital and recovered peaks',()=>{const points=drawdowns([{date:'a',equity:90},{date:'b',equity:120},{date:'c',equity:96},{date:'d',equity:132}],100);assert.deepEqual(points.map(p=>p.date),['a','b','c','d']);assert.ok(Math.abs(points[0].drawdown+.1)<1e-12);assert.equal(points[1].drawdown,0);assert.ok(Math.abs(points[2].drawdown+.2)<1e-12);assert.equal(points[3].drawdown,0);});
+
+test('moving-average filter uses only prior closes and holds cash at equality',()=>{
+  const settings={...config,strategy:'sma',lookback:2,start:'2024-01-04',end:'2024-01-08'};
+  const result=backtest(rows([10,10,12,11,9,12,13,8]),settings);
+  assert.deepEqual(result.strategy.trades.map(trade=>[trade.date,trade.side]),[
+    ['2024-01-04','BUY'],['2024-01-05','SELL'],['2024-01-07','BUY']
+  ]);
+  assert.ok(Math.abs(result.strategy.curve[0].equity-100)<1e-10);
+  assert.ok(Math.abs(result.strategy.curve[1].equity-100*9/11)<1e-10);
+  const flat=backtest(rows([100,100,100,100,100,100]),{...settings,end:'2024-01-06'});
+  assert.equal(flat.strategy.trades.length,0);
+});
+
+test('moving-average filter enforces warmup, charges both trades, and prevents lookahead',()=>{
+  const settings={...config,strategy:'sma',lookback:2,start:'2024-01-04',end:'2024-01-06'};
+  const prices=[10,10,12,11,9,12];
+  assert.throws(()=>backtest(rows(prices),{...settings,start:'2024-01-02'}),/Moving average needs/);
+  assert.throws(()=>backtest(rows(prices),{...settings,lookback:1}),/lookback/);
+  assert.throws(()=>backtest(rows(Array(6).fill(1e308)),settings),/too large/);
+  const result=backtest(rows(prices),{...settings,feeBps:100});
+  assert.equal(result.strategy.trades.length,2);
+  assert.ok(Math.abs(result.strategy.metrics.finalValue-100/(11*1.01)*9*.99)<1e-10);
+  const changed=backtest(rows([10,10,12,11,900,1]),{...settings,feeBps:100});
+  assert.deepEqual(result.strategy.curve[0].shares,changed.strategy.curve[0].shares);
+  assert.equal(result.strategy.trades[0].date,changed.strategy.trades[0].date);
+});

@@ -1,7 +1,6 @@
 # Orion Quant Lab backlog
 
 ## Next
-- Import exported JSON experiments and compare saved runs side by side.
 - Add train/test separation before any parameter search.
 
 ## Later
@@ -21,6 +20,8 @@
   hypothetical spot scenarios, and numerical validation tests.
 - Delayed signal execution, transaction costs, benchmark, metrics, chart, trades.
 - Browser-local experiments, self-contained JSON and equity CSV export.
+- Validated JSON experiment import with recomputed results and side-by-side comparison
+  for up to three archived runs.
 - Calculation tests, methodology and first learning note.
 
 - Daily API refresh, completed-session filtering, dataset hashes and freshness UI.

@@ -17,7 +17,7 @@
     <link rel="icon" href="/assets/atlas-shell/favicon.svg?v=727f2134fbea" />
     <link rel="stylesheet" href="/assets/atlas-shell/style.css?v=c8e5262a760c" />
     <script src="/assets/atlas-shell/theme.js?v=e03df0f86d0c"></script>
-    <link rel="stylesheet" href="/assets/quant/quant.css?v=2490f239bf4d" />
+    <link rel="stylesheet" href="/assets/quant/quant.css?v=412861a7e2d1" />
   </head>
   <body data-page="quant">
     <a class="skip" href="#main">Skip to content</a>
@@ -212,11 +212,31 @@
             <h2>Experiment archive</h2>
             <span class="fine">This browser · latest 10 runs</span>
           </div>
+          <label class="import-experiment"
+            >Import experiment JSON<input
+              id="import-experiment"
+              type="file"
+              accept=".json,application/json"
+          /></label>
           <div id="saved"></div>
           <p class="fine">
             Saved locally on this device. Export JSON to keep a portable copy with the complete
             dataset and results.
           </p>
+          <section id="comparison" hidden aria-labelledby="comparison-title">
+            <div class="result-heading">
+              <h2 id="comparison-title">Run comparison</h2>
+              <span class="fine">Choose 2–3 archived experiments</span>
+            </div>
+            <div class="table-wrap comparison-table">
+              <table>
+                <thead>
+                  <tr id="comparison-head"></tr>
+                </thead>
+                <tbody id="comparison-body"></tbody>
+              </table>
+            </div>
+          </section>
         </section>
         <section class="panel methodology">
           <p class="eyebrow">READ THE ASSUMPTIONS</p>
@@ -326,6 +346,6 @@
       <div class="palette-help">↑ ↓ navigate <span>↵ open</span></div>
     </dialog>
     <script src="/assets/atlas-shell/app.js?v=d10815200a08" defer></script>
-    <script type="module" src="/assets/quant/lab.js?v=42f60fc20d66"></script>
+    <script type="module" src="/assets/quant/lab.js?v=7126a5c74bb7"></script>
   </body>
 </html>

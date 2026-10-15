@@ -1,8 +1,8 @@
-# Atlas Quant architecture
+# Orion Quant Lab architecture
 
 ## First release
 
-Atlas Quant lives at `/quant/`, with the research workspace at `/quant/lab/`.
+Orion Quant Lab lives at `/quant/`, with the research workspace at `/quant/lab/`.
 The existing portfolio is a dependency-free static website served by Nginx.
 This release keeps that deployment model: browser ES modules provide the interface,
 a pure reusable JavaScript engine provides calculations, and a bundled SPY daily
@@ -26,7 +26,8 @@ no leverage, taxes, separate spread or slippage. Open positions are marked to
 market at the last close, without forced liquidation. Adjusted prices model a
 reinvested distribution series, not actual historical share counts or fills.
 
-Return = final equity / initial capital - 1. Daily returns include the initial
+Return = final equity / initial capital - 1. Annualized return is the geometric
+return scaled to 252 trading observations. Daily returns include the initial
 entry fee. Annualized volatility uses sample standard deviation × sqrt(252).
 Sharpe uses arithmetic daily mean / sample deviation × sqrt(252), zero risk-free
 rate; undefined when deviation is zero. Drawdown includes starting capital as
@@ -72,17 +73,19 @@ or disabled by GitHub; the UI flags data more than five days old.
 
 ## Independent repository and deployment
 
-Atlas is maintained in `winterblacksmith/atlas-quant`. Its static output is
+Orion Quant Lab is maintained in `winterblacksmith/quant-lab`. Its static output is
 `dist/quant/`, `dist/assets/quant/`, and `dist/assets/atlas-shell/`. The shell is a
-small independent copy of the portfolio's navigation, themes, and styles; Atlas
+small independent copy of the portfolio's navigation, themes, and styles; Orion Quant Lab
 owns this copy so a release can be previewed and tested without the portfolio.
-Portfolio links are absolute; all Atlas runtime dependencies are local.
+The `atlas-*` integration paths remain stable for the portfolio release workflow;
+Orion Quant Lab is the public product name.
+Portfolio links are absolute; all Orion Quant Lab runtime dependencies are local.
 
 The portfolio stores a full commit SHA in `atlas-quant.lock.json`, checks out
-that exact Atlas revision, runs Atlas checks and its data refresh, and assembles
-those three directories into its release. Atlas code changes go live only when
+that exact Orion revision, runs its checks and data refresh, and assembles those
+three directories into its release. Orion code changes go live only when
 the portfolio pin is updated and deployed. Weekday data refresh continues through
-the portfolio workflow at 23:30 UTC, using the pinned Atlas refresh script.
+the portfolio workflow at 23:30 UTC, using the pinned Orion refresh script.
 No deployment secrets are copied into this repository. Pull requests use read-only
-CI permissions. The Codex daily task pushes feature branches and opens PRs; it does
-not merge or change the production pin automatically.
+CI permissions. The Codex daily task updates one persistent review branch and PR;
+it does not merge or change the production pin automatically.

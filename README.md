@@ -1,4 +1,4 @@
-# Atlas Quant
+# Orion Quant Lab
 
 A small, transparent research lab for asking how a trading rule behaved in the past.
 Start with the museum-style field guide, then run a browser-based experiment using
@@ -10,9 +10,16 @@ SPY daily adjusted prices or your own CSV.
 
 - Compare time-series momentum with buy and hold on the same history.
 - Change dates, lookback, starting capital, and transaction costs.
-- Inspect daily equity, drawdown, volatility, Sharpe ratio, and individual trades.
+- Inspect daily equity, geometric annualized return, drawdown, volatility, Sharpe
+  ratio, and individual trades.
 - Save experiments locally and export full experiment JSON or daily equity CSV.
 - Import a different daily series with `date,close` columns.
+
+The results are historical evidence, not a forecast or proof that a rule will work
+in the future. Annualized return assumes 252 trading observations. The drawdown
+chart tracks declines from prior portfolio peaks for the strategy and benchmark.
+See [the strategy research roadmap](STRATEGY_ROADMAP.md) for staged ideas and the
+data and testing requirements for future strategies and options research.
 
 This is a historical simulation with imaginary money. There is no brokerage
 connection or real trading. Signals use prior closes and execute at the next close;
@@ -55,12 +62,23 @@ weekday schedule, so the repository snapshot may be older than the live website.
 See [architecture and assumptions](ARCHITECTURE.md), [backlog](BACKLOG.md),
 [development workflow](CONTRIBUTING.md), and [release history](CHANGELOG.md).
 
+## Development and review
+
+Ongoing lab changes use one persistent branch, `codex/orion-quant-rebrand`, and one
+open pull request. The daily Codex task adds tested improvements to that review and
+reports the changes, commit, checks, and PR on every run, including runs with no
+changes. It does not merge the PR or publish to the website. After a reviewed PR is
+merged, the same branch is reset from the latest `main` for future work.
+
 ## Connected to the portfolio
 
-This repository owns Atlas. The [portfolio](https://github.com/winterblacksmith/shishirlohar.com)
+This repository owns Orion Quant Lab. The [portfolio](https://github.com/winterblacksmith/shishirlohar.com)
 includes a tested, pinned commit in its existing deployment. Visitors still use
 `shishirlohar.com/quant/`; the portfolio's Projects page links to both this repo
-and the live lab. Updating Atlas's `main` does not by itself publish a new release.
+and the live lab. Updating Orion Quant Lab's `main` does not by itself publish a new release.
+This project is maintained in [`winterblacksmith/quant-lab`](https://github.com/winterblacksmith/quant-lab).
+The public lab keeps its `/quant/` routes. Publishing a reviewed lab update requires
+the portfolio to pin its full commit SHA and pass its own checks.
 
 Initial code was extracted from the portfolio on 2026-10-13, preserving attribution
 and methodology. The earlier implementation history remains in the portfolio repo.

@@ -14,13 +14,22 @@ export function parseCSV(text) {
   if (date < 0 || close < 0) throw new Error('CSV needs date,close columns, ISO dates, and decimal prices.');
   return validateRows(lines.map(line => { const cells = line.split(','); return {date: (cells[date] || '').trim(), close: Number(cells[close])}; }));
 }
+export function drawdowns(curve, capital) {
+  let peak = capital;
+  return curve.map(point => {
+    peak = Math.max(peak, point.equity);
+    return {date: point.date, drawdown: point.equity / peak - 1};
+  });
+}
 export function metrics(curve, capital) {
-  let prev = capital, peak = capital, drawdown = 0;
-  const returns = curve.map(p => { const r = p.equity / prev - 1; prev = p.equity; peak = Math.max(peak,p.equity); drawdown = Math.min(drawdown,p.equity/peak-1); return r; });
+  let prev = capital;
+  const returns = curve.map(p => { const r = p.equity / prev - 1; prev = p.equity; return r; });
   const mean = returns.reduce((a,b)=>a+b,0)/returns.length;
   const variance = returns.reduce((s,r)=>s+(r-mean)**2,0)/(returns.length-1);
   const sd = Math.sqrt(variance);
-  return {totalReturn:prev/capital-1, volatility:sd*Math.sqrt(252), sharpe:sd > 1e-12 ? mean/sd*Math.sqrt(252) : null, maxDrawdown:drawdown, finalValue:prev};
+  const annualizedReturn = (prev / capital) ** (252 / returns.length) - 1;
+  const maxDrawdown = Math.min(0, ...drawdowns(curve, capital).map(point => point.drawdown));
+  return {totalReturn:prev/capital-1, annualizedReturn, volatility:sd*Math.sqrt(252), sharpe:sd > 1e-12 ? mean/sd*Math.sqrt(252) : null, maxDrawdown, finalValue:prev};
 }
 export function backtest(rows, config) {
   validateRows(rows);

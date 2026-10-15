@@ -1,12 +1,12 @@
-# Atlas Quant backlog
+# Orion Quant Lab backlog
 
 ## Next
 - Import exported JSON experiments and compare saved runs side by side.
-- Add a drawdown chart and annualized return.
 - Add train/test separation before any parameter search.
 
 ## Later
-- Additional strategies and Strategy Arena using the shared engine.
+- Additional strategies and Strategy Arena using the priorities and readiness rules in
+  `STRATEGY_ROADMAP.md`; scheduled strategy work should read it first.
 - Evaluate a supported market-data provider if the unofficial endpoint becomes unreliable.
 - Server-side API, shared persistence, and optional React interface if needed.
 - Walk-forward validation, then advanced research.
@@ -20,5 +20,7 @@
 - Calculation tests, methodology and first learning note.
 
 - Daily API refresh, completed-session filtering, dataset hashes and freshness UI.
+- Annualized return and strategy-versus-benchmark drawdown chart.
 
-- Standalone Atlas repository, preview, CI checks, and a pinned portfolio integration.
+- Standalone Orion Quant Lab repository, preview, CI checks, and a pinned portfolio integration.
+- Public research field guide with purpose, implemented-versus-planned record, workflow, architecture, and explicit backtest limitations.

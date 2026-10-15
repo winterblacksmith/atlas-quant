@@ -3,22 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Atlas Quant — Shishir Lohar</title>
+    <title>Orion Quant Lab — Shishir Lohar</title>
     <meta
       name="description"
-      content="Atlas Quant: historical strategy backtests, benchmark comparisons, risk metrics, and reproducible research experiments."
+      content="Orion Quant Lab is Shishir Lohar's self-directed quantitative finance research project, with historical backtests, benchmark comparisons, risk analysis, and an open research roadmap."
     />
     <meta name="theme-color" content="#101011" />
     <link rel="canonical" href="https://shishirlohar.com/quant/" />
-    <meta property="og:title" content="Atlas Quant — Research Lab" />
-    <meta property="og:description" content="Test trading ideas against historical evidence." />
+    <meta property="og:title" content="Orion Quant Lab — Research Lab" />
+    <meta
+      property="og:description"
+      content="A self-directed quantitative finance research project: methods, working tools, limitations, and next questions."
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://shishirlohar.com/quant/" />
     <link rel="icon" href="/assets/atlas-shell/favicon.svg?v=727f2134fbea" />
     <link rel="stylesheet" href="/assets/atlas-shell/style.css?v=c8e5262a760c" />
     <script src="/assets/atlas-shell/theme.js?v=e03df0f86d0c"></script>
-    <link rel="stylesheet" href="/assets/quant/quant.css?v=90211dc4087b" />
-    <link rel="stylesheet" href="/assets/quant/exhibit.css?v=0587d8832749" />
+    <link rel="stylesheet" href="/assets/quant/quant.css?v=2490f239bf4d" />
+    <link rel="stylesheet" href="/assets/quant/exhibit.css?v=31e9d8030abd" />
   </head>
   <body data-page="quant">
     <a class="skip" href="#main">Skip to content</a>
@@ -49,56 +52,45 @@
       <main id="main" class="exhibit">
         <section class="exhibit-entry" aria-labelledby="exhibit-title">
           <div class="exhibit-label">
-            <span>ATLAS QUANT</span><span>A FIELD GUIDE TO THE RESEARCH LAB</span>
+            <span>ORION QUANT LAB</span><span>A FIELD GUIDE TO THE RESEARCH LAB</span>
           </div>
           <div class="entry-grid">
             <div>
-              <p class="exhibit-kicker">An invitation to investigate</p>
+              <p class="exhibit-kicker">A self-directed quantitative finance research project</p>
               <h1 id="exhibit-title">
                 What happens<br />when an idea<br /><em>meets the market?</em>
               </h1>
               <p class="entry-copy">
-                Give a simple trading rule a journey through the past. Watch what happens to a
-                simulated portfolio. Then ask the more interesting question: <strong>why?</strong>
+                I am building this lab to apply my software engineering, machine learning,
+                statistics, and data systems background to questions in quantitative finance. Its
+                first working experiment tests a simple rule against historical prices and asks what
+                the evidence can—and cannot—support.
               </p>
               <div class="entry-actions">
                 <a class="exhibit-button" href="#first-room"
                   >Take the tour <span aria-hidden="true">↓</span></a
                 ><a href="/quant/lab/">Already familiar? Enter the lab ↗</a>
               </div>
-              <p class="exhibit-caption">About a five-minute read · No finance background needed</p>
+              <p class="exhibit-caption">A short field guide · No finance background needed</p>
             </div>
             <figure class="exhibit-object">
-              <div class="object-label">OBJECT 001 <span>A RULE THROUGH TIME</span></div>
-              <svg viewBox="0 0 440 310" role="img" aria-labelledby="journey-title journey-desc">
-                <title id="journey-title">Two possible paths through the same market</title>
-                <desc id="journey-desc">
-                  An illustrative solid line and dashed line follow different paths from the same
-                  starting point. These are teaching illustrations, not backtest results.
-                </desc>
-                <path
-                  class="object-grid"
-                  d="M35 65H405 M35 130H405 M35 195H405 M35 260H405 M35 35V260 M125 35V260 M215 35V260 M305 35V260 M405 35V260"
-                />
-                <path
-                  class="object-benchmark"
-                  d="M35 225L65 210L95 218L125 162L155 190L185 148L215 215L245 178L275 120L305 141L335 70L365 88L405 45"
-                />
-                <path
-                  class="object-strategy"
-                  d="M35 225L65 225L95 205L125 175L155 185L185 185L215 185L245 185L275 140L305 154L335 110L365 120L405 83"
-                />
-                <circle cx="35" cy="225" r="6" class="object-point" />
-                <text x="35" y="288">THE SAME START</text>
-                <text x="405" y="288" text-anchor="end">DIFFERENT JOURNEYS</text>
-              </svg>
+              <div class="object-label">OBJECT 001 <span>THE RESEARCH CYCLE</span></div>
+              <div
+                class="research-sequence"
+                aria-label="Research sequence: question, data, model, evidence"
+              >
+                <span>01 <strong>Question</strong></span>
+                <span>02 <strong>Data</strong></span>
+                <span>03 <strong>Rule</strong></span>
+                <span>04 <strong>Evidence</strong></span>
+              </div>
               <figcaption>
-                <span class="object-legend">━━ A trading rule &nbsp; ┄ Simply holding</span>
+                <span class="object-legend">A REPEATABLE INVESTIGATION</span>
                 <p>
-                  Same market. Different decisions.<br />The shape of the journey matters as much as
-                  the destination.
+                  Begin with a testable idea. Follow the data, inspect the assumptions, and keep the
+                  limitations in view.
                 </p>
-                <small>Illustration only. Neither line represents measured performance.</small>
+                <small>Research process, not a performance chart.</small>
               </figcaption>
             </figure>
           </div>
@@ -106,7 +98,8 @@
         <nav class="exhibit-directory" aria-label="Exhibit chapters">
           <a href="#first-room">01 / The idea</a><a href="#rules">02 / The rules</a
           ><a href="#inside">03 / The machinery</a><a href="#reading">04 / The evidence</a
-          ><a href="#first-test">05 / Your first experiment</a>
+          ><a href="#first-test">05 / Your first experiment</a
+          ><a href="#research-record">06 / Research record</a>
         </nav>
         <section class="exhibit-room" id="first-room">
           <div class="room-marker">01 <span>THE IDEA</span></div>
@@ -126,6 +119,14 @@
                 <strong>Quantitative research</strong> simply means using numbers and repeatable
                 rules to investigate an idea. Here, you can inspect the decisions, compare the
                 outcome, and keep a record of what you tested.
+              </p>
+            </div>
+            <div class="why-built">
+              <span class="exhibit-kicker">WHY I BUILT THIS</span>
+              <p>
+                My background is primarily in computer science and software engineering. I built
+                Orion to develop the mathematical, statistical, and financial research skills that
+                quantitative finance requires, through small experiments I can explain and repeat.
               </p>
             </div>
             <aside class="curator-note">
@@ -216,6 +217,36 @@
                 </p>
               </li>
             </ol>
+            <div class="research-method">
+              <h3>From hypothesis to a credible result</h3>
+              <div class="research-method-grid">
+                <div>
+                  <span class="exhibit-kicker">IN THE LAB TODAY</span>
+                  <ol>
+                    <li>
+                      State a hypothesis and choose a historical window before changing the rule.
+                    </li>
+                    <li>Prepare daily adjusted prices or validate an imported CSV.</li>
+                    <li>Implement the rule without using future prices, then run the backtest.</li>
+                    <li>
+                      Compare with buy and hold under the same dates, capital, and modeled trade
+                      costs.
+                    </li>
+                    <li>
+                      Examine returns, volatility, drawdown, Sharpe ratio, and the trade record.
+                    </li>
+                  </ol>
+                </div>
+                <div>
+                  <span class="exhibit-kicker">VALIDATION STILL TO BUILD</span>
+                  <ol start="6">
+                    <li>Reserve unseen data for out-of-sample testing.</li>
+                    <li>Study how trying many settings can overfit the historical sample.</li>
+                    <li>Test sensitivity to costs and add a separate slippage model.</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
             <details class="exhibit-detail">
               <summary>A small example: why timing matters</summary>
               <p>
@@ -392,6 +423,74 @@
             </details>
           </div>
         </section>
+        <section class="exhibit-room" id="research-record">
+          <div class="room-marker">06 <span>RESEARCH RECORD</span></div>
+          <div class="room-body">
+            <h2>What is built.<br />What comes next.</h2>
+            <p class="room-lead">
+              Orion is a working learning project, not a record of live trading. Its current scope
+              is deliberately narrow so that each calculation and assumption can be inspected.
+            </p>
+            <div class="status-grid">
+              <div class="status-panel">
+                <span class="exhibit-kicker">WORKING NOW</span>
+                <h3>Historical experiments</h3>
+                <ul>
+                  <li>SPY daily adjusted-price snapshot and validated daily CSV import.</li>
+                  <li>
+                    Time-series momentum and buy-and-hold backtests with configurable dates,
+                    capital, lookback, and proportional trade costs.
+                  </li>
+                  <li>
+                    Same-asset benchmark; equity and drawdown charts; return, annualized return,
+                    volatility, Sharpe ratio, and maximum drawdown.
+                  </li>
+                  <li>
+                    Trade history, browser-local saved experiments, and JSON or equity CSV exports.
+                  </li>
+                </ul>
+              </div>
+              <div class="status-panel">
+                <span class="exhibit-kicker">PLANNED RESEARCH</span>
+                <h3>Stronger tests and broader models</h3>
+                <ul>
+                  <li>Import saved experiments and compare runs side by side.</li>
+                  <li>
+                    Train/test separation, then walk-forward validation and checks for parameter
+                    overfitting.
+                  </li>
+                  <li>A separate slippage model and sensitivity analysis for trading costs.</li>
+                  <li>
+                    Only after the validation foundation: factor research, portfolio optimization,
+                    Monte Carlo methods, and options pricing.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="architecture-note">
+              <span class="exhibit-kicker">IMPLEMENTED ARCHITECTURE</span>
+              <p>
+                A static HTML/CSS and browser JavaScript interface runs a separate JavaScript
+                backtest engine. Python scripts validate and refresh the published daily dataset.
+                GitHub Actions checks the lab; the portfolio's scheduled workflow refreshes the
+                published data. The portfolio serves the reviewed lab build from a Dockerized Nginx
+                site.
+              </p>
+              <p>
+                The current code does not use a server API, database, React, or a machine-learning
+                model. Those would be separate future design decisions, not existing capabilities.
+              </p>
+            </div>
+            <aside class="curator-note">
+              <span>RESEARCH PRINCIPLE</span>
+              <p>
+                Historical backtests do not imply future profitability. This lab is for learning
+                quantitative modeling, statistical reasoning, numerical experimentation, and
+                financial-market behavior—not for trading real money.
+              </p>
+            </aside>
+          </div>
+        </section>
         <section class="exhibit-exit">
           <p class="exhibit-kicker">THE NEXT EXHIBIT IS YOURS</p>
           <h2>You have the question.<br />Now run the experiment.</h2>
@@ -407,8 +506,7 @@
       <footer>
         <div class="footer-top">
           <div class="socials">
-            <a href="https://github.com/winterblacksmith/atlas-quant" aria-label="GitHub"
-              >github ↗</a
+            <a href="https://github.com/winterblacksmith/quant-lab" aria-label="GitHub">github ↗</a
             ><a href="https://www.linkedin.com/in/shishirlohar/" aria-label="LinkedIn"
               >linkedin ↗</a
             ><a href="mailto:shishirlohar@gmail.com">email ↗</a>
@@ -440,14 +538,14 @@
         <a href="https://shishirlohar.com/">About <span>01</span></a
         ><a href="https://shishirlohar.com/projects/">Projects <span>02</span></a
         ><a href="https://shishirlohar.com/experience/">Experience <span>03</span></a
-        ><a href="/quant/">Atlas Quant <span>04</span></a
+        ><a href="/quant/">Orion Quant Lab <span>04</span></a
         ><a
           href="https://shishirlohar.com/assets/shishir-lohar-resume.pdf?v=850dfe616178"
           target="_blank"
           rel="noopener"
           >Open résumé <span>↗</span></a
         ><a href="mailto:shishirlohar@gmail.com">Send an email <span>↗</span></a
-        ><a href="https://github.com/winterblacksmith/atlas-quant">GitHub <span>↗</span></a
+        ><a href="https://github.com/winterblacksmith/quant-lab">GitHub <span>↗</span></a
         ><button id="command-theme">Switch color theme <span>◐</span></button>
       </div>
       <p id="command-empty" hidden>No matching commands.</p>

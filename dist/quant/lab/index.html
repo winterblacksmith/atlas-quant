@@ -3,21 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Atlas Quant — Shishir Lohar</title>
+    <title>Orion Quant Lab — Shishir Lohar</title>
     <meta
       name="description"
-      content="Atlas Quant: historical strategy backtests, benchmark comparisons, risk metrics, and reproducible research experiments."
+      content="Orion Quant Lab: historical strategy backtests, benchmark comparisons, risk metrics, and reproducible research experiments."
     />
     <meta name="theme-color" content="#101011" />
     <link rel="canonical" href="https://shishirlohar.com/quant/lab/" />
-    <meta property="og:title" content="Atlas Quant — Research Lab" />
+    <meta property="og:title" content="Orion Quant Lab — Research Lab" />
     <meta property="og:description" content="Test trading ideas against historical evidence." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://shishirlohar.com/quant/lab/" />
     <link rel="icon" href="/assets/atlas-shell/favicon.svg?v=727f2134fbea" />
     <link rel="stylesheet" href="/assets/atlas-shell/style.css?v=c8e5262a760c" />
     <script src="/assets/atlas-shell/theme.js?v=e03df0f86d0c"></script>
-    <link rel="stylesheet" href="/assets/quant/quant.css?v=90211dc4087b" />
+    <link rel="stylesheet" href="/assets/quant/quant.css?v=2490f239bf4d" />
   </head>
   <body data-page="quant">
     <a class="skip" href="#main">Skip to content</a>
@@ -48,7 +48,7 @@
       <main id="main">
         <div class="lab-heading">
           <div>
-            <p class="eyebrow"><a href="/quant/">ATLAS QUANT</a> / RESEARCH LAB</p>
+            <p class="eyebrow"><a href="/quant/">ORION QUANT LAB</a> / RESEARCH LAB</p>
             <h1>Test an idea.</h1>
             <p>One asset. Clear rules. An honest comparison.</p>
           </div>
@@ -151,6 +151,26 @@
                 </svg>
                 <p id="interpretation" class="fine"></p>
               </section>
+              <section class="panel chart-panel">
+                <div class="result-heading">
+                  <h2>Drawdown from prior peak</h2>
+                  <div class="legend"><span>● Strategy</span><span>┄ Buy &amp; hold</span></div>
+                </div>
+                <svg
+                  id="drawdown-chart"
+                  viewBox="0 0 800 310"
+                  role="img"
+                  aria-labelledby="drawdown-title drawdown-desc"
+                >
+                  <title id="drawdown-title">Strategy and benchmark drawdowns</title>
+                  <desc id="drawdown-desc">
+                    Percentage decline from each portfolio's prior peak over the selected period.
+                  </desc>
+                </svg>
+                <p class="fine">
+                  Zero marks a new high. Lower values show the loss from the latest portfolio peak.
+                </p>
+              </section>
               <div class="actions">
                 <button id="save">Save experiment</button
                 ><button id="export">Export experiment JSON</button
@@ -219,11 +239,12 @@
             <summary>Understanding the metrics</summary>
             <p>
               <strong>Total return:</strong> percentage change from starting capital after modeled
-              costs. <strong>Sharpe:</strong> mean daily return divided by sample daily standard
-              deviation, multiplied by √252, assuming a zero risk-free rate. Undefined for constant
-              returns. <strong>Maximum drawdown:</strong> largest decline from a previous portfolio
-              peak, including starting capital. <strong>Volatility:</strong> sample daily standard
-              deviation multiplied by √252.
+              costs. <strong>Annualized return:</strong> geometric return scaled to 252 trading
+              observations. <strong>Sharpe:</strong> mean daily return divided by sample daily
+              standard deviation, multiplied by √252, assuming a zero risk-free rate. Undefined for
+              constant returns. <strong>Maximum drawdown:</strong> largest decline from a previous
+              portfolio peak, including starting capital. <strong>Volatility:</strong> sample daily
+              standard deviation multiplied by √252.
             </p>
           </details>
           <details>
@@ -245,7 +266,7 @@
       <footer>
         <div class="footer-top">
           <div class="socials">
-            <a href="https://github.com/winterblacksmith/atlas-quant" aria-label="GitHub"
+            <a href="https://github.com/winterblacksmith/quant-lab" aria-label="GitHub"
               >github ↗</a
             ><a href="https://www.linkedin.com/in/shishirlohar/" aria-label="LinkedIn"
               >linkedin ↗</a
@@ -278,20 +299,20 @@
         <a href="https://shishirlohar.com/">About <span>01</span></a
         ><a href="https://shishirlohar.com/projects/">Projects <span>02</span></a
         ><a href="https://shishirlohar.com/experience/">Experience <span>03</span></a
-        ><a href="/quant/">Atlas Quant <span>04</span></a
+        ><a href="/quant/">Orion Quant Lab <span>04</span></a
         ><a
           href="https://shishirlohar.com/assets/shishir-lohar-resume.pdf?v=850dfe616178"
           target="_blank"
           rel="noopener"
           >Open résumé <span>↗</span></a
         ><a href="mailto:shishirlohar@gmail.com">Send an email <span>↗</span></a
-        ><a href="https://github.com/winterblacksmith/atlas-quant">GitHub <span>↗</span></a
+        ><a href="https://github.com/winterblacksmith/quant-lab">GitHub <span>↗</span></a
         ><button id="command-theme">Switch color theme <span>◐</span></button>
       </div>
       <p id="command-empty" hidden>No matching commands.</p>
       <div class="palette-help">↑ ↓ navigate <span>↵ open</span></div>
     </dialog>
     <script src="/assets/atlas-shell/app.js?v=d10815200a08" defer></script>
-    <script type="module" src="/assets/quant/lab.js?v=1fdd29c5ff3c"></script>
+    <script type="module" src="/assets/quant/lab.js?v=5debfd7dd4f0"></script>
   </body>
 </html>
